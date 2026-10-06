@@ -1,0 +1,6 @@
+src/app.vala
+src/window.vala
+src/tools.vala
+src/secret.vala
+src/search.vala
+src/quick.vala
