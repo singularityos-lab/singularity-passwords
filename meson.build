@@ -31,7 +31,7 @@ if not meson.is_subproject() and libsingularity_dep.type_name() == 'internal'
 endif
 
 executable('singularity-passwords',
-  core + files('src/search.vala', 'src/quick.vala', 'src/window.vala', 'src/app.vala'),
+  core + files('src/search.vala', 'src/quick.vala', 'src/window.vala', 'src/agent_intents.vala', 'src/app.vala'),
   dependencies: [gtk_dep, gee_dep, gio_dep, math_dep, libsingularity_dep],
   install: true
 )
