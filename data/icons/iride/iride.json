@@ -1,0 +1,234 @@
+{
+ "format": 1,
+ "canvas": [
+  236,
+  236
+ ],
+ "box": [
+  0,
+  0,
+  220,
+  220
+ ],
+ "stack": [
+  {
+   "shadow": {
+    "dx": 0,
+    "dy": 6,
+    "blur": 7,
+    "color": "#400805",
+    "opacity": 0.45,
+    "region": [
+     -20,
+     -20,
+     276,
+     276
+    ]
+   },
+   "stack": [
+    {
+     "layer": "layers/000.svg",
+     "piece": "case"
+    },
+    {
+     "layer": "layers/001.svg",
+     "piece": "case"
+    },
+    {
+     "rim": "M44 20H192A24 24 0 0 1 216 44V186A24 24 0 0 1 192 210H44A24 24 0 0 1 20 186V44A24 24 0 0 1 44 20Z",
+     "light": [
+      20,
+      20,
+      216,
+      210
+     ],
+     "piece": "case"
+    }
+   ]
+  },
+  {
+   "layer": "layers/002.svg",
+   "piece": "case"
+  },
+  {
+   "layer": "layers/003.svg",
+   "piece": "case"
+  },
+  {
+   "layer": "layers/004.svg",
+   "piece": "case"
+  },
+  {
+   "layer": "layers/005.svg",
+   "piece": "case"
+  },
+  {
+   "layer": "layers/006.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/007.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/008.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/009.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/010.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/011.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/012.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/013.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/014.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/015.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/016.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/017.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/018.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/019.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/020.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/021.svg",
+   "piece": "knob"
+  },
+  {
+   "layer": "layers/022.svg",
+   "piece": "grip"
+  },
+  {
+   "clip": "M44 20H192A24 24 0 0 1 216 44V186A24 24 0 0 1 192 210H44A24 24 0 0 1 20 186V44A24 24 0 0 1 44 20Z",
+   "stack": [
+    {
+     "layer": "layers/023.svg",
+     "piece": "light"
+    }
+   ]
+  }
+ ],
+ "motion": [
+  {
+   "piece": "case",
+   "origin": [
+    118.0,
+    118.0
+   ],
+   "tracks": [
+    {
+     "kind": "opacity",
+     "from": [
+      1
+     ],
+     "at": 900,
+     "duration": 75,
+     "ease": "linear"
+    }
+   ]
+  },
+  {
+   "piece": "knob",
+   "origin": [
+    128.0,
+    118.0
+   ],
+   "tracks": [
+    {
+     "kind": "rotate",
+     "from": [
+      -150
+     ],
+     "at": 0,
+     "duration": 220,
+     "ease": "out"
+    },
+    {
+     "kind": "rotate",
+     "from": [
+      220
+     ],
+     "at": 220,
+     "duration": 210,
+     "ease": "out"
+    },
+    {
+     "kind": "rotate",
+     "from": [
+      -70
+     ],
+     "at": 430,
+     "duration": 210,
+     "ease": "out"
+    }
+   ]
+  },
+  {
+   "piece": "grip",
+   "origin": [
+    128.0,
+    170.0
+   ],
+   "tracks": [
+    {
+     "kind": "rotate",
+     "from": [
+      -18
+     ],
+     "at": 660,
+     "duration": 100,
+     "ease": "out"
+    },
+    {
+     "kind": "rotate",
+     "from": [
+      18
+     ],
+     "at": 760,
+     "duration": 140,
+     "ease": "spring"
+    }
+   ]
+  },
+  {
+   "piece": "light",
+   "origin": [
+    118.0,
+    118.0
+   ],
+   "tracks": []
+  }
+ ]
+}
