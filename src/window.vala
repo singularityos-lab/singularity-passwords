@@ -38,6 +38,9 @@ namespace Singularity.Apps.Passwords {
         private uint clear_clip_id;
         private uint refresh_id;
         private bool failed;
+        private bool loading = true;
+
+        private signal void loaded ();
 
         public PasswordsWindow (PasswordsApp app) {
             Object (application: app);
@@ -55,6 +58,7 @@ namespace Singularity.Apps.Passwords {
             set_sidebar_visible (true);
 
             search = add_bubble_search (_("Search Passwords"), (t) => {
+                if (t.strip ().casefold () == query) return;
                 query = t.strip ().casefold ();
                 fill_list ();
             });
@@ -138,7 +142,7 @@ namespace Singularity.Apps.Passwords {
             list.row_selected.connect ((row) => {
                 if (row == null) return;
                 var e = row.get_data<SecretEntry> ("entry");
-                if (e != null) show_entry.begin (e);
+                if (e != null && e != shown) show_entry.begin (e);
             });
             var scroll = new ScrolledWindow ();
             scroll.hscrollbar_policy = PolicyType.NEVER;
@@ -213,6 +217,45 @@ namespace Singularity.Apps.Passwords {
                 yield reload ();
             } catch (Error e) {
                 show_error (e.message);
+            }
+            loading = false;
+            loaded ();
+        }
+
+        public Variant save_migration () {
+            var d = new VariantDict ();
+            d.insert_value ("keyring", new Variant.string (current != null ? current.path : ""));
+            d.insert_value ("filter", new Variant.string (filter));
+            d.insert_value ("query", new Variant.string (search.text));
+            d.insert_value ("item", new Variant.string (shown != null ? shown.path : ""));
+            return d.end ();
+        }
+
+        public async void restore_migration (Variant data) {
+            if (loading) {
+                ulong id = loaded.connect (() => restore_migration.callback ());
+                yield;
+                disconnect (id);
+            }
+            if (failed) return;
+            var d = new VariantDict (data);
+            string keyring = (d.lookup_value ("keyring", VariantType.STRING) ?? new Variant.string ("")).get_string ();
+            foreach (var c in collections) if (c.path == keyring) current = c;
+            string wanted = (d.lookup_value ("filter", VariantType.STRING) ?? new Variant.string ("all")).get_string ();
+            filter = wanted in new string[] { "all", "logins", "other" } ? wanted : "all";
+            string text = (d.lookup_value ("query", VariantType.STRING) ?? new Variant.string ("")).get_string ();
+            search.text = text;
+            query = text.strip ().casefold ();
+            close_panel ();
+            yield reload ();
+            string item = (d.lookup_value ("item", VariantType.STRING) ?? new Variant.string ("")).get_string ();
+            SecretEntry? found = null;
+            foreach (var e in entries) if (e.path == item) found = e;
+            if (found == null) return;
+            yield show_entry (found);
+            for (int i = 0; list.get_row_at_index (i) != null; i++) {
+                var row = list.get_row_at_index (i);
+                if (row.get_data<SecretEntry> ("entry") == found) list.select_row (row);
             }
         }
 

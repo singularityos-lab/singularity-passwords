@@ -2,7 +2,7 @@ using Gtk;
 
 namespace Singularity.Apps.Passwords {
 
-    public class PasswordsApp : Singularity.Application {
+    public class PasswordsApp : Singularity.Application, Singularity.Migration.Migratable {
         public const uint CLEAR_SECONDS = 30;
         private PasswordSearch search;
         private Singularity.DockMenu dock_menu;
@@ -144,6 +144,33 @@ namespace Singularity.Apps.Passwords {
             }
             if (w == null) w = new PasswordsWindow (this);
             w.present ();
+        }
+
+        public Variant save_model () {
+            return new VariantDict ().end ();
+        }
+
+        public async void restore_model (Variant model) throws Error {
+        }
+
+        public string window_kind (Gtk.Window w) {
+            return (w is PasswordsWindow) ? "passwords" : "";
+        }
+
+        public Variant save_window (Gtk.Window w) {
+            return ((PasswordsWindow) w).save_migration ();
+        }
+
+        public async Gtk.Window? rebuild_window (string kind, Variant data) throws Error {
+            if (kind != "passwords") return null;
+            Gtk.Window? old = null;
+            foreach (var win in get_windows ()) {
+                if (win is PasswordsWindow) old = win;
+            }
+            if (old != null) old.destroy ();
+            var w = new PasswordsWindow (this);
+            yield w.restore_migration (data);
+            return w;
         }
 
         public void error (Gtk.Window parent, string title, string message) {
