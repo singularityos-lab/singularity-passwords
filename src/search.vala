@@ -125,7 +125,7 @@ namespace Singularity.Apps.Passwords {
 
         public override async Singularity.SearchActivationReply? activate_result (string id, string[] terms, uint32 timestamp) throws Error {
             if (id == LOCKED_ID) {
-                app.activate ();
+                app.show_window ();
                 return null;
             }
             var e = find (id);
@@ -134,14 +134,14 @@ namespace Singularity.Apps.Passwords {
                 e = find (id);
             }
             if (e == null || !(yield still_unlocked (e))) {
-                app.activate ();
+                app.show_window ();
                 return null;
             }
             string password;
             try {
                 password = yield store.secret (e);
             } catch (Error err) {
-                app.activate ();
+                app.show_window ();
                 return null;
             }
             if (password == "") return null;
@@ -160,7 +160,7 @@ namespace Singularity.Apps.Passwords {
         }
 
         public override void launch_search (string[] terms, uint32 timestamp) {
-            app.activate ();
+            app.show_window ();
         }
     }
 }
